@@ -28,8 +28,9 @@ function toggleTask(id) {
   render();
 }
 
-function deleteTask(id) {
-  tasks.filter((t) => t.id !== id);
+function deleteTask(id, e) {
+  tasks = tasks.filter((t) => t.id !== id);
+  e.target.parentElement.remove();
   render();
 }
 
@@ -62,7 +63,7 @@ function render() {
     const del = document.createElement("button");
     del.className = "task__del";
     del.textContent = "✕";
-    del.addEventListener("click", () => deleteTask(task.id));
+    del.addEventListener("click", (e) => { deleteTask(task.id, e) });
 
     li.appendChild(span);
     li.appendChild(del);
