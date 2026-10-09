@@ -52,9 +52,7 @@ function render() {
     const task = visible[i];
     const li = document.createElement("li");
     li.className = "task";
-    if (task.done) {
-      li.classList.add("done");
-    }
+    li.addEventListener("click", () => { li.classList.toggle("done") });
 
     const span = document.createElement("span");
     span.className = "task__text";
