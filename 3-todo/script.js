@@ -28,9 +28,8 @@ function toggleTask(id) {
   render();
 }
 
-function deleteTask(id, e) {
+function deleteTask(id) {
   tasks = tasks.filter((t) => t.id !== id);
-  e.target.parentElement.remove();
   render();
 }
 
@@ -48,12 +47,15 @@ function updateCounter() {
 }
 
 function render() {
+  list.replaceChildren();
   const visible = getVisibleTasks();
   for (let i = 0; i <= visible.length - 1; i++) {
     const task = visible[i];
     const li = document.createElement("li");
     li.className = "task";
-    li.addEventListener("click", () => { li.classList.toggle("done") });
+    if (task.done) { 
+      li.classList.add("done");
+    }
 
     const span = document.createElement("span");
     span.className = "task__text";
@@ -63,7 +65,7 @@ function render() {
     const del = document.createElement("button");
     del.className = "task__del";
     del.textContent = "✕";
-    del.addEventListener("click", (e) => { deleteTask(task.id, e) });
+    del.addEventListener("click", () => deleteTask(task.id));
 
     li.appendChild(span);
     li.appendChild(del);
