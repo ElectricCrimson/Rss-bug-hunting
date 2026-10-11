@@ -15,7 +15,7 @@ function addTask() {
   if (!text) {
     errorEl.hidden = false;
     return
-  };
+  }
   errorEl.hidden = true;
   tasks.push({ id: nextId++, text: text, done: false });
   input.value = "";
@@ -39,6 +39,13 @@ function clearCompleted() {
 }
 
 function getVisibleTasks() {
+  if (currentFilter === "active") {
+    return tasks.filter((task) => !task.done);
+  }
+  if (currentFilter === "done") {
+    return tasks.filter((task) => task.done);
+  }
+
   return tasks;
 }
 
@@ -77,26 +84,12 @@ function render() {
 addBtn.addEventListener("click", addTask);
 clearBtn.addEventListener("click", clearCompleted);
 
-function filterTasks(curFilter) {
-  const show = (el) => el.classList.remove("hidden");
-  const hide = (el) => el.classList.add("hidden");
-
-  list.querySelectorAll(".task").forEach(show);
-
-  if (curFilter === "active") {
-    list.querySelectorAll(".task.done").forEach(hide);
-  };
-  if (curFilter === "done") {
-    list.querySelectorAll(".task:not(.done)").forEach(hide);
-  };
-}
-
 filterButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     filterButtons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     currentFilter = btn.dataset.filter;
-    filterTasks(currentFilter);
+    render();
   });
 });
 
