@@ -103,7 +103,7 @@ function renderCart() {
     return acc + item.qty;
   }, 0);
   totalEl.textContent = total;
-  emptyMsg.hidden = true;
+  emptyMsg.hidden = !cart.length ? false : true;
 }
 
 promoBtn.addEventListener("click", applyPromo);
